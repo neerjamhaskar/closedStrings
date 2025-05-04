@@ -8,9 +8,8 @@ This project computes the following within a given string. For each input string
 ## Table of Contents
 1. [Project Structure](#project-structure)
 2. [Installation and Compilation](#installation-and-compilation)
-3. [Input File Format](#input-file-format)
-4. [Examples](#examples)
-5. [Requirements](#requirements)
+3. [Examples](#examples)
+4. [Requirements](#requirements)
 
 
 ## Project Structure
