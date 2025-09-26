@@ -4,6 +4,9 @@ This project computes the following within a given string. For each input string
 - The **maximal right-closed array (MRC)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time.
 - The **compact representation** for all closed substrings of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time. 
 - All **maximal closed substrings (MCSs)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time.
+- To cite this repo please cite the corresponding research paper : [Efficient Computation of Closed Substrings - SPIRE 2025
+](https://doi.org/10.1007/978-3-032-05228-5_15)
+
 
 ## Table of Contents
 1. [Project Structure](#project-structure)
