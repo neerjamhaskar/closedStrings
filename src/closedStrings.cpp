@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <list>
 #include <stack>
 #include <unordered_map>
 #include <stdio.h>
@@ -10,40 +11,47 @@
 
 extern std::vector<int> next;
 
-void computeClosedStrings(std::vector<std::vector<std::pair<uint64_t, uint64_t>>>& MRC, const uint64_t& n, const unsigned char* W)
+void computeClosedStrings(std::vector<std::list<std::pair<uint64_t, uint64_t>>>& MRC, const uint64_t& n, const unsigned char* W)
 {
     printf("The Compact Representation of all Closed Strings of string %s : \n", W);
-    for(uint64_t i = 0; i < n; ++i)
+    for (uint64_t i = 0; i < n; ++i)
     {
-        uint64_t n_rcs = MRC[i].size(); // Number of right closed strings at i
-        for(uint64_t j = 0; j < n_rcs; ++j)
-        {
-            uint64_t stringLength = MRC[i][j].first;
-            uint64_t borderLength = MRC[i][j].second;
-            std::string rightClosedString(W + i, W + i + stringLength);
-            uint64_t nextRCSBorderLength;
+        auto &rcsVec = MRC[i];  
+        if (rcsVec.empty()) continue;
 
-            if(j == n_rcs - 1) // stringLength - 1 == borderLength
-                printf("%s : (%ld, %ld, %ld)\n", rightClosedString.c_str(), i, 1ul, stringLength);
+        for (auto it = rcsVec.begin(); it != rcsVec.end(); ++it)
+        {
+            uint64_t stringLength = it->first;
+            uint64_t borderLength = it->second;
+            std::string rightClosedString(W + i, W + i + stringLength);
+
+            auto nextIt = std::next(it); // look ahead
+            if (nextIt == rcsVec.end())  // last element
+            {
+                printf("%s : (%lu, %lu, %lu)\n",
+                    rightClosedString.c_str(), i, 1ul, stringLength);
+            }
             else
             {
-                nextRCSBorderLength = MRC[i][j + 1].second;
-                printf("%s : (%ld, %ld, %ld)\n", rightClosedString.c_str(), i, (stringLength + nextRCSBorderLength - borderLength + 1), stringLength);
+                uint64_t nextRCSBorderLength = nextIt->second;
+                printf("%s : (%lu, %lu, %lu)\n",
+                    rightClosedString.c_str(), i,
+                    (stringLength + nextRCSBorderLength - borderLength + 1),
+                    stringLength);
             }
         }
     }
 }
 
-void computeMaximalClosedStrings(const std::vector<std::vector<std::pair<uint64_t, uint64_t>>>& MRC, const uint64_t& n, const unsigned char* W)
+void computeMaximalClosedStrings(const std::vector<std::list<std::pair<uint64_t, uint64_t>>>& MRC, const uint64_t& n, const unsigned char* W)
 {
     printf("MCS List for the string %s : \n", W);
     for(uint64_t i = 0; i < n; ++i)
     {
-        uint64_t n_rcs = MRC[i].size(); // Number of right closed strings at i
-        for(uint64_t j = 0; j < n_rcs; ++j)
+        for(const auto& pair_length_border : MRC[i])
         {
-            uint64_t stringLength = MRC[i][j].first;
-            uint64_t borderLength = MRC[i][j].second;
+            uint64_t stringLength = pair_length_border.first;
+            uint64_t borderLength = pair_length_border.second;
             std::string MaximalClosedString(W + i, W + i + stringLength);
 
             if(i == 0 || W[i - 1] != W[i + stringLength - borderLength - 1])
@@ -147,7 +155,7 @@ int main(int argc, char **argv)
     std::stack<USet*> S;
 
     S.push(new USet(SA[0], LCP[0])); 
-    std::vector<std::vector<std::pair<uint64_t, uint64_t>>> MRC(n, std::vector<std::pair<uint64_t, uint64_t>>());
+    std::vector<std::list<std::pair<uint64_t, uint64_t>>> MRC(n, std::list<std::pair<uint64_t, uint64_t>>());
 
     next.resize(n, -1);
     uint64_t i = 1;
@@ -218,9 +226,9 @@ int main(int argc, char **argv)
     for(uint64_t i = 0; i < n; ++i)
     {
         std::cout << i << ": "; 
-        for(uint64_t j = 0; j < MRC[i].size(); ++j)
+        for(const auto& pair_length_border : MRC[i])
         {
-            printf("(%ld,%ld), ", MRC[i][j].first, MRC[i][j].second);
+            printf("(%ld,%ld), ", pair_length_border.first, pair_length_border.second);
         }
         printf("\n");
     }
