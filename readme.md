@@ -1,7 +1,8 @@
 # Closed Strings 
 
 This project computes the following within a given string. For each input string, the program computes:
-- The **maximal right-closed array (MRC)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time.
+- The **maximal right-closed array (MRC)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time given its SA and LCP array.
+- The **maximal right-closed array (MRC)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time with no pre-processing.
 - The **compact representation** for all closed substrings of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time. 
 - All **maximal closed substrings (MCSs)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time.
 - To cite this repo please cite the corresponding research paper : [Efficient Computation of Closed Substrings - SPIRE 2025
@@ -17,7 +18,8 @@ This project computes the following within a given string. For each input string
 
 ## Project Structure
 
-- `src/` - Source code for computing all the above mentioned data structures and strings. 
+- `src/` - Source code for computing all the above mentioned data structures and strings given the string and its SA and LCP array. 
+- `src_crochemore/` - Source code for computing the MRC array with no pre-processing of the string.  
 - `strings/` - Contains `smallStringArrayGenerator` tool and sample text files for generating suffix arrays and LCP arrays for small substrings.
 
 ## Installation and Compilation
@@ -147,6 +149,60 @@ The input files should follow this format:
     10: (1,0), 
     MCS List for the string mississippi : 
     m, ississi, i, ss, sis, i, ss, ippi, i, pp, i,
+
+### Compiling and Executing the closedStrings program
+
+Once you have generated the necessary input files, you can proceed to compile and execute the closedStrings program in the `src` folder.
+
+1. **Navigate to the `src_crochemore/` directory**:
+    ```bash
+    cd src_crochemore
+    ```
+
+2. **Compile** the closedStrings program:
+    ```bash
+    make
+    ```
+
+    This will generate an executable named `closedStringsCrochemore`.
+
+3. **Run the closedStrings program**:
+    ```bash
+    ./closedStrings <text_file_without_extension>
+    ```
+
+- Input File Format
+The input files should follow this format:
+    - `<file_name>` - Text file containing a sequence of 1-byte characters.
+    - **Note:** all these files are assumed to be in the same directory. 
+
+## Examples
+
+### Small String Generation Example
+    
+    vscode ➜ /workspaces/closedSubstrings/strings (main) $ make
+    g++ -std=c++17 -O3 -o smallStringArrayGenerator smallStringArrayGenerator.cpp
+    vscode ➜ /workspaces/closedSubstrings/strings (main) $ ./smallStringArrayGenerator
+    Enter the string to compute SA and LCP: mississippi
+    Enter the base filename: t4
+    String, SA, and LCP array written to t4, t4.sa, and t4.lcp
+
+- Note that the `smallStringArrayGenerator` executable only computes SA and LCP for strings that have a length < 10000. 
+
+### The MRC Array with no Pre-processing of the given String
+    vscode ➜ /workspaces/closedStrings/strings (TOCS_2026) $ ../src_crochemore/closedStringsCrochemore t4
+    The MRC Array for the string MISSISSIPPI : 
+    0: (1,0), 
+    1: (7,4), (1,0), 
+    2: (6,3), (2,1), 
+    3: (5,2), (3,1), (1,0), 
+    4: (4,1), (1,0), 
+    5: (2,1), 
+    6: (1,0), 
+    7: (4,1), (1,0), 
+    8: (2,1), 
+    9: (1,0), 
+    10: (1,0), 
 
 ### Large Strings 
 - For large strings please generate required input files using efficient algorithms to compute the SA and LCP arrays in the above specified format. The binary read and write snippet can be used from the `./strings/smallStringArrayGenerator.cpp` and the `./src/closedStrings.cpp`. 

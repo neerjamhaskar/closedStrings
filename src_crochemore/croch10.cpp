@@ -1,21 +1,28 @@
-/* ********************************************************************* *
-*                                                                        *
-*   C implementation of Franek-Smyth-Xiao Algorithm FSX10()              *
-*   works along the same principles as Crochemore's algorithm            *  
-*   in O(n log(n)) time where n is the length of the input string        *
-*   The space complexity is 10*n*sizeof(unsigned int) bytes              *
-*                                                                        *
-*   This program can be compiled and optimized -O3 level with no         *
-*   complications                                                        *
-*                                                                        *
-*         Author: F. Franek                                              *
-*         (C) F. Franek, W.F. Smyth, X. Xiao                             *
-*             ARG, McMaster University, October 2001                     *
-*                                                                        *
-*                                                                        *
-*         Corrected July 30, 2003 (the gap handling functions)           *
-*                                                                        *
-* ************************************************************************/
+/* *************************************************************************** *
+*   Modified Crochemore's repetition algorithm to compute the MRC Array        *
+*   Modified in October 2024                                                   *
+*   (C) Author: S.K. Jain, N. Mhaskar                                          *
+*                                                                              *
+*   For exact changes in code kindly do a diff on this file and the            *
+*   original file - https://www.cas.mcmaster.ca/~franek/research/croch10.cpp   *
+*                                                                              *
+*   Original C++ implementation of Franek-Smyth-Xiao Algorithm FSX10()         *
+*   works along the same principles as Crochemore's algorithm                  *  
+*   in O(n log(n)) time where n is the length of the input string              *
+*   The space complexity is 10*n*sizeof(unsigned int) bytes                    *
+*                                                                              *
+*   This program can be compiled and optimized -O3 level with no               *
+*   complications                                                              *
+*                                                                              *
+*         Author: F. Franek                                                    *
+*         (C) F. Franek, W.F. Smyth, X. Xiao                                   *
+*             ARG, McMaster University, October 2001                           *
+*                                                                              *
+*                                                                              *
+*         Corrected July 30, 2003 (the gap handling functions)                 *
+*                                                                              *
+* ******************************************************************************/
+
 
 // when using compiler that cannot inline, just uncomment the
 // following line 
@@ -838,7 +845,7 @@ INLINE unsigned int ScQueueInsert(unsigned int i)
 // function CreateData -----------------------------------
 void CreateData(char* string) 
 {
-  N = strlen(string);
+  N = n;
   N_1 = N-1;
   null = N+1;
 
@@ -1074,15 +1081,15 @@ while((j = GapList[L]) != null) {
 
  // now (s,L,r) is the maximal repetition
 
- if (first) {
-   printf("indexing starts at position 0\n");
-   printf("repetitions are output in the following format: (s,l,p)\n");
-   printf("     s = starting position of the generator\n");
-   printf("     l = length of the generator\n");
-   printf("     p = power of the repetition\n");
-   first=0;
- }
- printf("(%d,%d,%d)\n",s,L,r);
+//  if (first) {
+//    printf("indexing starts at position 0\n");
+//    printf("repetitions are output in the following format: (s,l,p)\n");
+//    printf("     s = starting position of the generator\n");
+//    printf("     l = length of the generator\n");
+//    printf("     p = power of the repetition\n");
+//    first=0;
+//  }
+ //printf("(%d,%d,%d)\n",s,L,r);
  fflush(stdout);
 
 }//endwhile
@@ -1651,13 +1658,13 @@ int i;
 CreateData(string);  // allocate memory and initialize global data
 CreateIndex(string); // create index for letters occuring in string
 InitLevel(string);
-        printf("Level %d:\n",L);show_Classes();    // if desired
+        //printf("Level %d:\n",L);show_Classes();    // if desired
 L = 1;
 output_Reps(L);
 while(1) {
   i = NextLevel();
   L++;
-         printf("Level %d:\n",L);show_Classes();   // if desired
+         //printf("Level %d:\n",L);show_Classes();   // if desired
   if (!i) break;
   output_Reps(L);
 }//endwhile
@@ -1763,7 +1770,7 @@ int main(int argc, char **argv)
  //char* string = NewString(NULL);  // randomly generated string
 
     if (argc != 2) {
-        fprintf(stderr, "Usage: ./closedStrings <text_file without extension> [cs|mcs]\n");
+        fprintf(stderr, "Usage: ./closedStringsCrochemore <text_file without extension>\n");
         return -1;
     }
 
@@ -1783,7 +1790,7 @@ int main(int argc, char **argv)
     rewind(fp);
 
     // Allocate memory for W array
-    string = (char*)malloc(sizeof(char) * (n + 1));
+    string = (char*)malloc(sizeof(char) * (n));
     if (string == nullptr) {
         fprintf(stderr, "Memory allocation failed for W\n");
         fclose(fp);
@@ -1796,7 +1803,7 @@ int main(int argc, char **argv)
 
     string[n + 1] = '\0';
     MRC.resize(n, std::list<std::pair<uint64_t, uint64_t>>());
-    printf("input:\"%s\"\n",string);
+    //printf("input:\"%s\"\n",string);
     computeSingletonMRCS();
     FSX10(string);
     printMRCArray();
