@@ -172,9 +172,9 @@ Once you have generated the necessary input files, you can proceed to compile an
     ```
 
 - Input File Format
-The input files should follow this format:
+The input file should follow this format:
     - `<file_name>` - Text file containing a sequence of 1-byte characters.
-    - **Note:** all these files are assumed to be in the same directory. 
+    - **Note:** this file is assumed to be in the same directory. 
 
 ## Examples
 
