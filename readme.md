@@ -150,7 +150,7 @@ The input files should follow this format:
     MCS List for the string mississippi : 
     m, ississi, i, ss, sis, i, ss, ippi, i, pp, i,
 
-### Compiling and Executing the closedStrings program
+### Compiling and Executing the closedStringsCrochemore program
 
 Once you have generated the necessary input files, you can proceed to compile and execute the closedStrings program in the `src` folder.
 
@@ -166,9 +166,9 @@ Once you have generated the necessary input files, you can proceed to compile an
 
     This will generate an executable named `closedStringsCrochemore`.
 
-3. **Run the closedStrings program**:
+3. **Run the closedStringsCrochemore program**:
     ```bash
-    ./closedStrings <text_file_without_extension>
+    ./closedStringsCrochemore <text_file_without_extension>
     ```
 
 - Input File Format
