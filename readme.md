@@ -1,8 +1,8 @@
 # Closed Strings 
 
 This project computes the following within a given string. For each input string, the program computes:
-- The **maximal right-closed array (MRC)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time given its SA and LCP array.
-- The **maximal right-closed array (MRC)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time with no pre-processing.
+- The **maximal right-closed array (MRC)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time given its SA and LCP array and $\Theta(n)$-auxiliary space.
+- The **maximal right-closed array (MRC)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time with no pre-processing and $\Theta(n)$-auxiliary space.
 - The **compact representation** for all closed substrings of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time. 
 - All **maximal closed substrings (MCSs)** of a given string $w[1..n]$ in $\mathcal{O}(n \log n)$-time.
 - To cite this repo please cite the corresponding research paper : [Efficient Computation of Closed Substrings - SPIRE 2025

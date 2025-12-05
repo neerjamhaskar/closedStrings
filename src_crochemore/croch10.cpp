@@ -46,6 +46,7 @@
 #include <vector>
 #include <list>
 #include <iostream>
+#include <cstdint>
 
 /* *************************************************
            FSX10 data and functions begin
@@ -92,6 +93,7 @@ unsigned int* GNext = NULL;        // will be an array
 unsigned int* GPrev = NULL;        // will be an array
 
 std::vector<std::list<std::pair<uint64_t, uint64_t>>> MRC; 
+std::vector<uint64_t> closedStringBorder; // Integer array T as in the paper
 unsigned int L;
 char* string;
 unsigned int n;
@@ -1180,8 +1182,9 @@ unsigned int r;
 
 void addValidMRC(uint64_t index, uint64_t l, uint64_t b)
 {
-    if(MRC[index].size() > 0 && MRC[index].front().second == b)
+    if(closedStringBorder[index] == b)
       return;
+    closedStringBorder[index] = b;
     if(index + l == n || (index + l < n && string[index + b] != string[index + l]))
         MRC[index].push_front({l, b});
 }
@@ -1803,6 +1806,7 @@ int main(int argc, char **argv)
 
     string[n + 1] = '\0';
     MRC.resize(n, std::list<std::pair<uint64_t, uint64_t>>());
+    closedStringBorder.resize(n, n + 1); 
     //printf("input:\"%s\"\n",string);
     computeSingletonMRCS();
     FSX10(string);
