@@ -70,7 +70,7 @@ std::pair<std::vector<std::pair<int, int>>, USet*> Union(std::vector<USet*>& set
     USet* largestSet = sets[0];
 
     for (USet* set : sets) {
-        if (set->LCP > 0 && set->data.size() > largestSet->data.size()) {
+        if (set->data.size() > largestSet->data.size()) {
             largestSet = set; // Update largestSet if we find a larger one
         }
     }
