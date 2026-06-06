@@ -1,3 +1,9 @@
+/*
+The below implementation is a variation of code available in https://github.com/heurezjusz/Quasiperiods. 
+The code was used in the "Experimental evaluation of algorithms for computing quasiperiods", Theoretical Computer Science. 
+DOI: https://doi.org/10.1016/j.tcs.2020.11.033
+*/
+
 #include "USet.h"
 #include <iostream>
 #include <algorithm>
